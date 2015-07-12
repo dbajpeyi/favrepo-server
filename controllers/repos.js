@@ -5,7 +5,7 @@ var monk = require('monk');
 var wrap = require('co-monk');
 var db = monk('localhost/repodb');
 var co = require('co');
-
+var request = require('koa-request');
 var repos = wrap(db.get('repos'));
 
 // From lifeofjs
@@ -20,6 +20,20 @@ module.exports.all = function * all(next) {
   this.body = yield repos.find({});
 };
 
+module.exports.search = function * search(name, next){
+  if('GET'!=this.method) return yield next;
+  
+  var options = {
+    url : 'https://api.github.com/search/repositories?q=' + name + '&sort=stars',
+    headers: {
+      'User-Agent': 'repoApp',
+      'Content-Type' : 'application/json'
+    }
+  }
+  var result = yield request(options); 
+  var test = JSON.parse(result.body);
+  this.body = test;
+};
 
 module.exports.fetch = function * fetch(id,next) {
   if ('GET' != this.method) return yield next;
@@ -49,9 +63,7 @@ module.exports.add = function * add(data,next) {
   this.body = 'Done!';
 };
 
-module.exports.searchGithub = function * searchGithub(data, next){
-  
-};
+
 
 module.exports.remove = function * remove(id,next) {
   if ('DELETE' != this.method) return yield next;

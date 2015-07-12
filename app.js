@@ -14,10 +14,10 @@ app.use(cors());
 // Logger
 app.use(logger());
 
+app.use(route.get('/search/:name', repos.search));
 app.use(route.get('/repos/', repos.all));
 app.use(route.post('/repos/', repos.add));
 app.use(route.delete('/repos/:id', repos.remove));
-app.use(route.delete('/search/:name', repos.searchGithub));
 
 
 // Serve static files
