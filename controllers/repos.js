@@ -49,6 +49,10 @@ module.exports.add = function * add(data,next) {
   this.body = 'Done!';
 };
 
+module.exports.searchGithub = function * searchGithub(data, next){
+  
+};
+
 module.exports.remove = function * remove(id,next) {
   if ('DELETE' != this.method) return yield next;
 
