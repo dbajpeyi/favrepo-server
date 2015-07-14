@@ -60,7 +60,7 @@ module.exports.add = function * add(data,next) {
   if (!inserted) {
     this.throw(405, "The repo couldn't be added.");
   }
-  this.body = 'Done!';
+  this.body = yield repo;
 };
 
 

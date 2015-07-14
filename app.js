@@ -16,7 +16,7 @@ app.use(logger());
 
 app.use(route.get('/search/:name', repos.search));
 app.use(route.get('/repos/', repos.all));
-app.use(route.post('/repos/', repos.add));
+app.use(route.post('/repo/save/', repos.add));
 app.use(route.delete('/repos/:id', repos.remove));
 
 
